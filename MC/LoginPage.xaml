@@ -10,10 +10,16 @@
                 Padding="20"
                 VerticalOptions="Center"
                 >
+				<Label
+					Text="UserName"
+					/>
                 <Entry
                     x:Name="Username"
                     Placeholder="Username"
                     />
+				<Label
+					Text="Password"
+					/>
                 <Entry
                     x:Name="Password"
                     Placeholder="Password"

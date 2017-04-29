@@ -10,6 +10,11 @@ namespace MC
 {
     public partial class LoginPage
     {
+		public LoginPage()
+		{
+			InitializeComponent();
+		}
+
         public LoginPage(LoginVM loginVM)
         {
             InitializeComponent();
@@ -18,7 +23,9 @@ namespace MC
             this.Bind(ViewModel, vm => vm.Username, v => v.Username.Text);
             this.Bind(ViewModel, vm => vm.Password, v => v.Password.Text);
             this.BindCommand(ViewModel, vm => vm.Login, v => v.Login);
-            // Display spinner while loading.
+
+			/// LoginVM.IsLoadingがtrueの場合はテキストボックスやボタンを非活動にしたり、スピナーを表示したりする。
+            /// Display spinner while loading.
             this.WhenAnyValue(x => x.ViewModel.IsLoading)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(busy =>

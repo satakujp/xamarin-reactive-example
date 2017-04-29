@@ -6,10 +6,21 @@ using Xamarin.Forms;
 
 namespace MC
 {
+	/// <summary>
+	/// LoginPage.xaml用のViewModel
+	/// </summary>
     public class LoginVM : ReactiveObject
     {
-        // Login, IsLogging.
+		/// <summary>
+		/// 書きかけ
+		/// Login, IsLogging. 
+		/// </summary>
+		/// <value>The login.</value>
         public ReactiveCommand Login { get; protected set; }
+
+		/// <summary>
+		/// 書きかけ
+		/// </summary>
         readonly ObservableAsPropertyHelper<bool> _isLogging;
         public bool IsLogging
         {
@@ -42,6 +53,8 @@ namespace MC
 
         public LoginVM()
         {
+			/// IObservable()オブジェクトを変数に格納する。
+			/// 中身はUsernameプロパティとPasswordプロパティの両方が入力されたらtrueを返す処理
             var canLogin =
                 this.WhenAnyValue(
                     x => x.Username,
@@ -52,7 +65,11 @@ namespace MC
                             bool IsPasswordValid = !String.IsNullOrWhiteSpace(pa);
                             return IsUsernameValid && IsPasswordValid;
                         });
+
+			/// 
             Login = ReactiveCommand.Create(() => { }, canLogin);
+
+			/// 
             Login.IsExecuting.ToProperty(this, x => x.IsLogging, out _isLogging);
         }
     }

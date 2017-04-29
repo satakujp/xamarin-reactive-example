@@ -6,6 +6,9 @@ using Xamarin.Forms;
 
 namespace MC
 {
+	/// <summary>
+	/// SuccessPage.xaml用のViewModelのようだが、不要かも。
+	/// </summary>
     public class SuccessVM : ReactiveObject {
 
         public SuccessVM()

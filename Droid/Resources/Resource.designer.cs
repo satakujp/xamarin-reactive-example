@@ -26,8 +26,8 @@ namespace MC.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::MC.Droid.Resource.Attribute.actionBarSize;
 			global::Splat.Resource.String.library_name = global::MC.Droid.Resource.String.library_name;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::MC.Droid.Resource.Attribute.actionBarSize;
 		}
 		
 		public partial class Animation

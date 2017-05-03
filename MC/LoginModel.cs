@@ -10,7 +10,7 @@ namespace MC
 	/// <summary>
 	/// ユーザー認証を実行するサービス
 	/// </summary>
-    public class MGR : ReactiveObject
+    public class LoginModel : ReactiveObject
     {
         // AuthStatus.
         ModelRequestStatus _authStatus;
@@ -26,22 +26,22 @@ namespace MC
         }
 
         // Auth.
-        AuthModel _auth;
+		AuthToken _auth;
 
 		/// <summary>
 		/// 変更があったらPropertyChangedイベントが発生する。
 		/// </summary>
 		/// <value>The auth.</value>
-        public AuthModel Auth
+		public AuthToken Auth
         {
             get { return _auth; }
             protected set { this.RaiseAndSetIfChanged(ref _auth, value); }
         }
 
-        public MGR(MGRClient client)
+		public LoginModel()
         {
-            _client = client;
-            _auth = new AuthModel();
+			_client = new LoginModelClient();
+			_auth = new AuthToken();
             _authStatus = ModelRequestStatus.None;
         }
 
@@ -69,7 +69,7 @@ namespace MC
             }
         }
 
-        private MGRClient _client;
+		private LoginModelClient _client;
     }
 }
 

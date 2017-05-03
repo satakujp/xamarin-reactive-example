@@ -11,9 +11,9 @@ namespace MC
 	/// RESTサーバーへ問い合わせをするためのクラス
 	/// RESTサーバーへのリクエストはRestSharpを使用する。
 	/// </summary>
-    public class MGRClient
+    public class LoginModelClient
     {
-        public MGRClient()
+        public LoginModelClient()
         {
             _client = new RestClient("http://absence.dev.mstatic.ru/api/v1");
         }
@@ -25,7 +25,7 @@ namespace MC
 		/// <returns>The auth async.</returns>
 		/// <param name="username">Username.</param>
 		/// <param name="password">Password.</param>
-        public async Task<AuthModel> GetAuthAsync(string username, string password)
+        public async Task<AuthToken> GetAuthAsync(string username, string password)
         {
 			var request = new RestRequest("auth/token", Method.POST);
             request.AddBody(
@@ -36,7 +36,7 @@ namespace MC
 
 			/// `await`キーワードでサーバーからの問い合わせが来るまで待つ。
 			/// どうも詳しくは調べていないが、BaseModelオブジェクトにうまく変換されるような応答が返されるようだ。
-            var result = await _client.Execute<BaseModel<AuthModel>>(request);
+			var result = await _client.Execute<BaseModel<AuthToken>>(request);
 
             return result.Data.data;
         }

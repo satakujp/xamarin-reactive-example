@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace MC
 {
-    public class AuthModel
+    public class AuthToken
     {
         public string accessToken { get; set; }
         public string refreshToken { get; set; }

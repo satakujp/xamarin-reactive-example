@@ -52,9 +52,9 @@
     <Compile Include="LoginVM.cs" />
     <Compile Include="ModelRequestStatus.cs" />
     <Compile Include="AppCoordinator.cs" />
-    <Compile Include="AuthModel.cs" />
-    <Compile Include="MGRClient.cs" />
-    <Compile Include="MGR.cs" />
+    <Compile Include="AuthToken.cs" />
+    <Compile Include="LoginModelClient.cs" />
+    <Compile Include="LoginModel.cs" />
     <Compile Include="BaseModel.cs" />
     <Compile Include="SuccessPage.xaml.cs" />
     <Compile Include="SuccessVM.cs" />

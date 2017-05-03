@@ -35,6 +35,7 @@ namespace MC
             _loginPage = new LoginPage(_loginVM);
 
             _successPage = new SuccessPage();
+
 			_failureVM = new FailureVM();
 			_failurePage = new FailurePage(_failureVM);
 
@@ -50,12 +51,13 @@ namespace MC
 		/// </summary>
         public void setupMGR()
         {
-            _mgrClient = new MGRClient();
-            _mgr = new MGR(_mgrClient);
+            // _mgrClient = new MGRClient();
+            // _mgr = new MGR(_mgrClient);
 
             /// Print result of the request.
 			/// MC.MGR.authorize()でユーザー認証が成功したら、Authプロパティが変更されて、認証情報を標準出力に表示する。
-            this.WhenAnyValue(x => x._mgr.Auth)
+            // this.WhenAnyValue(x => x._mgr.Auth)
+			this.WhenAnyValue(x => x._loginVM.Model.Auth) 
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(auth =>
                     {
@@ -71,26 +73,6 @@ namespace MC
 		/// </summary>
         void setupMGRAuth()
         {
-			/// MC.LoginVM.IsLoggingプロパティが変更されたら、UsernameプロパティとPasswordプロパティの値で認証をする。
-            /// Peform request.
-            this.WhenAnyValue(x => x._loginVM.IsLogging)
-                .Where(x => x == true)
-                .ObserveOn(RxApp.MainThreadScheduler)
-                .Subscribe(executing =>
-                    {
-                        Debug.WriteLine("AppCoordinator. Authorize");
-                        _mgr.authorize(_loginVM.Username, _loginVM.Password);
-                    });
-
-			/// MC.MGR.AuthStatusプロパティの状態が変更されて、ModelRequestStatus.Processであるうちは、MC.LoginVM.IsLoadingをtrueにする。
-            /// Display spinner while request is in progress.
-            this.WhenAnyValue(x => x._mgr.AuthStatus)
-                .ObserveOn(RxApp.MainThreadScheduler)
-                .Subscribe(status =>
-                    {
-                        Debug.WriteLine("AppCoordinator. MGR.AuthStatus: '{0}'", status);
-                        _loginVM.IsLoading = (status == ModelRequestStatus.Process);
-                    });
 
 			this.WhenAnyValue(x => x._failureVM.IsConfirmed)
 				.ObserveOn(RxApp.MainThreadScheduler)
@@ -107,7 +89,7 @@ namespace MC
         {
 			/// MC.MGR.AuthStatusがModelRequestStatus.Successになったら、つまり認証に成功したら、成功ページ`SuccessPage.xaml`を表示する。
             /// Go to 'Success' upon successful authorization.
-            this.WhenAnyValue(x => x._mgr.AuthStatus)
+			this.WhenAnyValue(x => x._loginVM.Model.AuthStatus)
                 .Where(x => x == ModelRequestStatus.Success)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(status =>
@@ -118,7 +100,7 @@ namespace MC
 
 			/// MC.MGR.AuthStatusがModelRequestStatus.Failureになったら、つまり認証に失敗したら、失敗ページ`FailurePage.xaml`を表示する。
             /// Go to 'Failure' upon failed authorization.
-            this.WhenAnyValue(x => x._mgr.AuthStatus)
+			this.WhenAnyValue(x => x._loginVM.Model.AuthStatus)
                 .Where(x => x == ModelRequestStatus.Failure)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(status =>
@@ -128,14 +110,15 @@ namespace MC
                     });
         }
 
-        private MGRClient _mgrClient;
-        private MGR _mgr;
+        // private MGRClient _mgrClient;
+		// private LoginModel _mgr;
 
         private LoginVM _loginVM;
         private LoginPage _loginPage;
 
         //private SuccessVM _successVM;
         private SuccessPage _successPage;
+
 		private FailureVM _failureVM;
         private FailurePage _failurePage;
     }

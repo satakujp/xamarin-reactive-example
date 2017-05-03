@@ -19,3 +19,8 @@ Here is how the final application looks like on Android and iOS:
 | ------- | --- |
 | ![Android preview](img/android-preview.gif) | ![iOS preview](img/ios-preview.gif) |
 
+Support
+-------
+
+* Xcode 8.3.1
+* Xamarin Studio Community 6.3(build 863)
